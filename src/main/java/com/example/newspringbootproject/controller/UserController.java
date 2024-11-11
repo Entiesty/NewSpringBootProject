@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @RequestMapping("/list")
-    public ModelAndView allUsers(Long id) {
+    public ModelAndView allUsers() {
         List<User> userList = userService.list();
         ModelAndView mav = new ModelAndView("user/list");
         mav.addObject("users", userList);
