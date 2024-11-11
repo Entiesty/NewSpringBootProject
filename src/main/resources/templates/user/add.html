@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新增用户</title>
+    <!-- -->
+    <script charset="UTF-8" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        // 提交请求
+        function doCommit() {
+            // 获取文本框的值
+            let userName = document.getElementById("userName").value;
+            let note = document.getElementById("note").value;
+            // 组织为JSON
+            let user = {
+                "userName": userName,
+                "note": note
+            };
+            // Ajax请求
+            axios({
+                method: "post", // POST请求
+                url: "./insert", // 请求路径
+                data: JSON.stringify(user), // 转化为字符串
+                headers: { // 设置请求体为JSON数据类型
+                    'Content-Type': 'application/json;charset=UTF-8'
+                }
+            }).then(resp => {
+                // 请求响应结果
+                const result = resp.data;
+                if (result == null || result.id == null) {
+                    alert("插入失败");
+                    return;
+                }
+                alert("插入成功");
+            })
+        }
+    </script>
+
+</head>
+<body>
+<form id="insertForm">
+    <table>
+        <tr>
+            <td>用户名称：</td>
+            <td><label for="userName"></label><input id="userName" name="userName"></td>
+        </tr>
+        <tr>
+            <td>备注</td>
+            <td><label for="note"></label><input id="note" name="note"></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="text-align: center">
+                <input id="submit" onclick="doCommit()" type="button" value="提交" />
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

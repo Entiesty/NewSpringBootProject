@@ -1,0 +1,36 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <script charset="UTF-8" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        // 请求验证的POJO
+        var pojo = {
+            id: null,
+            date : '2017-08-08',
+            doubleValue : 999999.09,
+            integer : 100,
+            range : 1000,
+            email : 'email',
+            size :'adv1212',
+            regexp : 'a,b,c,d'
+        }
+        // Ajax请求
+        axios({
+            method: "post", // POST请求
+            url: "./validate", // 请求路径
+            data: JSON.stringify(pojo), // 转化为字符串
+            headers: { // 设置请求体为JSON数据类型
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        }).then(resp => {
+            // 请求响应结果
+            var result = resp.data;
+            document.getElementById("context").innerText = JSON.stringify(result);
+        })
+    </script>
+    <title>数据验证</title>
+</head>
+<body>
+     <span id="context"/>
+</body>
+</html>

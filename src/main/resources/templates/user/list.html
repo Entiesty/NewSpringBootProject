@@ -1,0 +1,63 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <!-- -->
+    <script charset="UTF-8" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        function doSearch() {
+            // 获取和处理参数
+            let userName = document.getElementById("userName").value;
+            let param = "";
+            // 参数为不空
+            if (userName != null) {
+                userName = userName.trim();
+                param = userName=== ""? "": "?userName=" + userName;
+            }
+            // Ajax请求
+            axios.get("./search" + param).then(function(response) { // ①
+                // 获取请求结果
+                let users = response.data;
+                // 表格内的HTML内容
+                let contents = "";
+                for (let i=0; i<users.length; i++) {
+                    const user = users[i];
+                    contents +="<tr>";
+                    contents += "<td>" + user.id + "</td>";
+                    contents += "<td>" + user.userName + "</td>";
+                    contents += "<td>" + user.note + "</td>";
+                    contents += "</tr>";
+                }
+                // 修改表格的内容显示，展示查询结果
+                document.getElementById("table-body").innerHTML =contents;
+            });
+        }
+    </script>
+</head>
+<body>
+<div>
+    <table>
+        <tr>
+            <td>用户名称：<input id="userName" name="userName"></td>
+            <td><button onclick="doSearch();">查询</button></td>
+        </tr>
+    </table>
+    <table th:border="1px">
+        <thead>
+        <tr>
+            <th>编号</th>
+            <th>姓名</th>
+            <th>备注</th>
+        </tr>
+        </thead>
+        <tbody id="table-body">
+        <tr th:each="user:${users}"> <!--②-->
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.note}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
