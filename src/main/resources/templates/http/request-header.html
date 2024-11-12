@@ -1,0 +1,40 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>测试请求头</title>
+    <script charset="UTF-8" src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript">
+        // 设置请求头参数
+        const config = {
+            headers:{
+                id: 1 // 请求头加入“id”参数
+            }
+        }
+        // Ajax请求，并传递请求头
+        axios.get("./user", config).then(function(response) {
+            // 获取请求结果
+            let user = response.data;
+            // 展示用户信息
+            document.getElementById("id").innerHTML = user.id;
+            document.getElementById("user_name").innerHTML = user.userName;
+            document.getElementById("note").innerHTML = user.note;
+        });
+    </script>
+</head>
+<body>
+<table>
+    <tr>
+        <td>用户编号：</td>
+        <td><span id="id"/></td>
+    </tr>
+    <tr>
+        <td>用户名称：</td>
+        <td><span id="user_name"/></td>
+    </tr>
+    <tr>
+        <td>备注：</td>
+        <td><span id="note"/></td>
+    </tr>
+</table>
+</body>
+</html>
