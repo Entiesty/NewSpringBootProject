@@ -7,12 +7,14 @@ import com.example.newspringbootproject.validator.UserValidator;
 import jakarta.validation.Valid;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 import java.text.DateFormat;
@@ -124,5 +126,69 @@ public class UserController {
             }
         }
         return map;
+    }
+
+    @GetMapping("/show")
+    public String showUser(Long id, Model model) {
+        User user = userService.getById(id);
+        model.addAttribute("user", user);
+
+        return "data/user";
+    }
+
+//    @GetMapping("/redirect1")
+//    public String redirect1(String userName, String note) {
+//        User user = new User();
+//        user.setUserName(userName);
+//        user.setNote(note);
+//        userService.save(user);
+//
+//        return "redirect:/user/show?id=" + user.getId();
+//    }
+//
+//    @GetMapping("/redirect2")
+//    public ModelAndView redirect2(String userName, String note) {
+//        User user = new User();
+//        user.setUserName(userName);
+//        user.setNote(note);
+//        userService.save(user);
+//
+//        ModelAndView mav = new ModelAndView();
+//        mav.setViewName("redirect:/user/show?id=" + user.getId());
+//
+//        return mav;
+//    }
+
+    @GetMapping("/showUser2")
+    public String showUser2(User user, Model model) {
+        System.out.println(user.getId());
+
+        return "data/user";
+    }
+
+    @GetMapping("/attr/redirect1")
+    public String redirect1(String userName, String note, RedirectAttributes ra) {
+        User user = new User();
+        user.setUserName(userName);
+        user.setNote(note);
+        userService.save(user);
+
+        ra.addFlashAttribute("user", user);
+
+        return "redirect:/user/showUser2";
+    }
+
+    @GetMapping("/attr/redirect2")
+    public ModelAndView redirect2(String userName, String note, RedirectAttributes ra) {
+        User user = new User();
+        user.setUserName(userName);
+        user.setNote(note);
+        userService.save(user);
+
+        ra.addFlashAttribute("user", user);
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/user/showUser2");
+
+        return mav;
     }
 }

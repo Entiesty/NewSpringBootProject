@@ -1,0 +1,25 @@
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>测试Session</title>
+</head>
+<body>
+<table>
+    <tr>
+        <td>用户编号</td>
+        <!-- 直接取出Session保存的Long型用户编号 -->
+        <td th:text="${session.user_id}"></td>
+    </tr>
+    <tr>
+        <td>用户名称</td>
+        <!-- 从Session保存的用户对象中，取出用户名称 -->
+        <td th:text="${session.user.userName}"></td>
+    </tr>
+    <tr>
+        <td>备注</td>
+        <!-- 从Session保存的用户对象中，取出备注 -->
+        <td th:text="${session.user.note}"></td>
+    </tr>
+</table>
+</body>
+</html>
