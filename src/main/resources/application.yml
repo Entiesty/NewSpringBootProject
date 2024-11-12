@@ -9,6 +9,10 @@ spring:
     url: jdbc:mysql://localhost:3306/experiment?useSSL=false&useUnicode=true&characterEncoding=UTF-8
     username: root
     password: 147258
+  messages:
+    encoding: UTF-8
+    basename: international
+    cache-duration: 300s
   mvc:
     format:
       date: yyyy-MM-dd
